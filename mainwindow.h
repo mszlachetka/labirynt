@@ -21,18 +21,11 @@ private slots:
     void on_actionO_Qt_triggered();
     void on_pushButton_3_pressed();
     void on_pushButton_clicked();
+    void keyPressEvent(QKeyEvent *event);
 
 
 
 
-
-    void on_pushButton_4_clicked();
-
-    void on_pushButton_5_clicked();
-
-    void on_pushButton_7_clicked();
-
-    void on_pushButton_6_clicked();
 
 
 
@@ -44,9 +37,13 @@ private slots:
 
     void on_actionO_Qt_hovered();
 
+
+
+
 private:
     Ui::MainWindow *ui;
     Plansza *p;
+
 };
 
 #endif // MAINWINDOW_H

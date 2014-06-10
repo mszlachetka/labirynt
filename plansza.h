@@ -10,7 +10,9 @@
 
 class Plansza : public QWidget
 {
+
     Q_OBJECT
+
 public:
     explicit Plansza(QWidget *parent = 0);
     bool game_status=false;
@@ -28,6 +30,7 @@ public:
      QKeyEvent *w;
 
      double ruchy;
+     int teleport_bar;
      int czas;
      int iteracja;
      int wykonane;
@@ -50,7 +53,7 @@ public slots:
     void paintEvent(QPaintEvent *);
 
     void rysuj_Siatka(QPainter *d);
-
+        void doteleport();
     bool isgame();
 
     void tick();

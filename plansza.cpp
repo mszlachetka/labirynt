@@ -35,7 +35,7 @@ Plansza::Plansza(QWidget *parent):QWidget(parent)
     reset_Plansza();
     reset_Lawa();
     t=new QTimer;
-    t->setInterval(100);
+    t->setInterval(20);
     t->start();
     connect(t,SIGNAL(timeout()),this,SLOT(tick()));
     this->czas=0;
@@ -178,8 +178,13 @@ void Plansza::rysuj_Plansza(QPainter *d)
             }
             if(this->tpiksele[i][j].finish && this->tpiksele[i][j].xpos==g->xpos && this->tpiksele[i][j].ypos==g->ypos)
             {
+                d->setPen(Qt::white);
 
+                d->drawText(242,389,200,200,0,"ZWYCIESTWO",0);
+                this->game_pause=true;
                 this->move_status=false;
+                d->setPen(Qt::blue);
+                this->teleport_bar=0;
             }
 
 
@@ -187,6 +192,12 @@ void Plansza::rysuj_Plansza(QPainter *d)
                    if(this->tlawa[i][j].xpos==this->g->xpos && this->tlawa[i][j].ypos==this->g->ypos &&this->tlawa[i][j].colored )
                    {
                        if(this->czas>100) this->move_status=false;
+                       d->setPen(Qt::white);
+
+                       d->drawText(242,389,200,200,0,"PORAZKA",0);
+                        this->teleport_bar=0;
+
+                       d->setPen(Qt::blue);
                    }
 
 }
@@ -368,7 +379,7 @@ void Plansza::tick()
 if(!this->game_pause)
 {
     this->czas++;
-if(this->czas>100)
+if(this->czas>200)
 {
     this->Heads.push_back(&this->tlawa[1][1]);
     this->tlawa[1][1].free_status=false;
@@ -425,7 +436,7 @@ void Plansza::reset_Plansza()
             this->tpiksele[i][j].error=false;
              this->tpiksele[i][j].finish=false;
             this->tpiksele[i][j].colored=false;
-
+            this->teleport_bar=0;
 
             this->ruchy=0;
 
@@ -490,5 +501,37 @@ int Plansza:: add_Lawa(int wykonane, int dowykonania)//zalewanie
         }
     return wykonane;
 
+
+}
+
+void Plansza::doteleport()
+{
+  if(this->teleport_bar>=100)
+  {
+qsrand(QTime::currentTime().msec());
+int i,j;
+int iback,jback;
+    this->move_status=true;
+iback=this->g->xpos;
+jback=this->g->ypos;
+
+
+i=rand()%10-5;
+j=rand()%10-5;
+
+ this->g->xpos+=i*10;
+ this->g->ypos+=j*10;
+if(this->g->xpos<=15) this->g->xpos=15;
+if(this->g->ypos<=15) this->g->ypos=15;
+if(this->g->xpos>=485) this->g->xpos=485;
+if(this->g->ypos>=385) this->g->ypos=385;
+
+if(this->tlawa[(this->g->xpos-5)/10][(this->g->ypos-5)/10].colored)
+{
+this->g->xpos=iback;
+this->g->ypos=jback;
+}
+    this->teleport_bar=0;
+}
 
 }
