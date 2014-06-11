@@ -15,10 +15,10 @@ class Plansza : public QWidget
 
 public:
     explicit Plansza(QWidget *parent = 0);
-    bool game_status=false;
-    bool filled_status=false;
-    bool move_status=false;
-    bool game_pause=false;
+    bool game_status;
+    bool filled_status;
+    bool move_status;
+    bool game_pause;
 
 
 
@@ -49,7 +49,7 @@ public slots:
     void rysuj_Plansza(QPainter *d);
     void reset_Plansza();
     void reset_Lawa();
-    int add_Lawa(int , int );
+    void add_Lawa(int);
     void paintEvent(QPaintEvent *);
 
     void rysuj_Siatka(QPainter *d);

@@ -14,7 +14,10 @@ Plansza::Plansza(QWidget *parent):QWidget(parent)
     g->size=5;
     g->xpos=15;
     g->ypos=15;
-
+    game_status=false;
+    filled_status=false;
+     move_status=false;
+     game_pause=false;
     this->setMaximumHeight(400);
     this->setMaximumWidth(500);
 
@@ -50,6 +53,7 @@ void Plansza::paintEvent(QPaintEvent *)
 
     QPainter d(this);
      rysuj_Frame(&d);
+
 
     if(this->isgame())
     {
@@ -385,8 +389,8 @@ if(this->czas>200)
     this->tlawa[1][1].free_status=false;
     if(this->czas%12==0)
     {
-        this->iteracja=this->Heads.size()-wykonane;
-                wykonane=add_Lawa(wykonane,this->iteracja);
+
+                add_Lawa(this->Heads.size());
     }
 }
 }
@@ -445,6 +449,7 @@ void Plansza::reset_Plansza()
 
 
         }
+     this->game_pause=false;
 }
 
 void Plansza:: reset_Lawa()
@@ -473,10 +478,10 @@ void Plansza:: reset_Lawa()
 
 }
 
-int Plansza:: add_Lawa(int wykonane, int dowykonania)//zalewanie
+void Plansza:: add_Lawa( int dowykonania)//zalewanie
 {
-    int i=wykonane;
-    for(int i;i<dowykonania;i++)
+
+    for(int i=0;i<dowykonania;i++)
         {
           if(this->tpiksele[this->Heads.at(i)->xplanszy+1][this->Heads.at(i)->yplanszy].Lwall && this->tlawa[this->Heads.at(i)->xplanszy+1][this->Heads.at(i)->yplanszy].free_status)
           {
@@ -499,7 +504,7 @@ int Plansza:: add_Lawa(int wykonane, int dowykonania)//zalewanie
               this->Heads.push_back(&this->tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy-1]);
           }
         }
-    return wykonane;
+
 
 
 }
@@ -530,6 +535,7 @@ if(this->tlawa[(this->g->xpos-5)/10][(this->g->ypos-5)/10].colored)
 {
 this->g->xpos=iback;
 this->g->ypos=jback;
+   this->doteleport();
 }
     this->teleport_bar=0;
 }
