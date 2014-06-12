@@ -24,17 +24,17 @@ public:
 
 
 
-     Pole *g;
-     Pole **tpiksele;
-     Pole **tlawa;
-     QKeyEvent *w;
+    Pole *g;
+    Pole **tpiksele;
+    Pole **tlawa;
+    QKeyEvent *w;
 
-     double ruchy;
-     int teleport_bar;
-     int czas;
-     int iteracja;
-     int wykonane;
-        QVector <Pole *> Heads;
+    double ruchy;
+    int teleport_bar;
+    int czas;
+    int iteracja;
+    int wykonane;
+    QVector <Pole *> Heads;
 private:
     QTimer *t;
 
@@ -42,7 +42,7 @@ private:
 signals:
 
 public slots:
-     void generuj_Plansza();
+    void generuj_Plansza();
 
     void rysuj_Gracz(QPainter *d , Pole *g);
     void rysuj_Frame(QPainter *d);
@@ -53,7 +53,7 @@ public slots:
     void paintEvent(QPaintEvent *);
 
     void rysuj_Siatka(QPainter *d);
-        void doteleport();
+    void doteleport();
     bool isgame();
 
     void tick();

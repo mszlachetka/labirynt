@@ -16,8 +16,8 @@ Plansza::Plansza(QWidget *parent):QWidget(parent)
     g->ypos=15;
     game_status=false;
     filled_status=false;
-     move_status=false;
-     game_pause=false;
+    move_status=false;
+    game_pause=false;
     this->setMaximumHeight(400);
     this->setMaximumWidth(500);
 
@@ -52,7 +52,7 @@ void Plansza::paintEvent(QPaintEvent *)
 {
 
     QPainter d(this);
-     rysuj_Frame(&d);
+    rysuj_Frame(&d);
 
 
     if(this->isgame())
@@ -67,7 +67,7 @@ void Plansza::paintEvent(QPaintEvent *)
 
     this->update(0,0,this->maximumWidth(),this->maximumHeight());
 
-   // rysuj_Siatka(&d);
+    // rysuj_Siatka(&d);
 
 }
 
@@ -160,11 +160,11 @@ void Plansza::rysuj_Plansza(QPainter *d)
             if(!this->tpiksele[i][j].Gwall)  d->drawLine(this->tpiksele[i][j].xpos-this->tpiksele[i][j].size,this->tpiksele[i][j].ypos-this->tpiksele[i][j].size,this->tpiksele[i][j].xpos+this->tpiksele[i][j].size,this->tpiksele[i][j].ypos-this->tpiksele[i][j].size);
             if(!this->tlawa[i][j].free_status && this->czas>80)
             {
-                 d->setBrush(Qt::darkRed);
-                 d->setPen(Qt::red);
-                 d->drawRect(this->tlawa[i][j].get_xpos()-g->get_size(),this->tlawa[i][j].get_ypos()-g->get_size(),2*g->get_size(),2*g->get_size());
-                  this->tlawa[i][j].colored=true;
-                 d->setPen(Qt::blue);
+                d->setBrush(Qt::darkRed);
+                d->setPen(Qt::red);
+                d->drawRect(this->tlawa[i][j].get_xpos()-g->get_size(),this->tlawa[i][j].get_ypos()-g->get_size(),2*g->get_size(),2*g->get_size());
+                this->tlawa[i][j].colored=true;
+                d->setPen(Qt::blue);
             }
 
             if(this->tpiksele[i][j].xpos==g->xpos && this->tpiksele[i][j].ypos==g->ypos )
@@ -193,18 +193,18 @@ void Plansza::rysuj_Plansza(QPainter *d)
 
 
 
-                   if(this->tlawa[i][j].xpos==this->g->xpos && this->tlawa[i][j].ypos==this->g->ypos &&this->tlawa[i][j].colored )
-                   {
-                       if(this->czas>100) this->move_status=false;
-                       d->setPen(Qt::white);
+            if((this->tlawa[i][j].xpos==this->g->xpos && this->tlawa[i][j].ypos==this->g->ypos &&this->tlawa[i][j].colored) || (this->tpiksele[i][j].finish && this->tlawa[i][j].colored) )
+            {
+                if(this->czas>100) this->move_status=false;
+                d->setPen(Qt::white);
 
-                       d->drawText(242,389,200,200,0,"PORAZKA",0);
-                        this->teleport_bar=0;
+                d->drawText(242,389,200,200,0,"PORAZKA",0);
+                this->teleport_bar=0;
 
-                       d->setPen(Qt::blue);
-                   }
+                d->setPen(Qt::blue);
+            }
 
-}
+        }
 
 }
 
@@ -216,7 +216,7 @@ void Plansza:: generuj_Plansza()
     int counter=0;
     int x=20;
     int y=20;
-      this->tpiksele[x][y].free_status=false;
+    this->tpiksele[x][y].free_status=false;
     while(counter<100000)
     {
         kierunek=rand()%4+1;
@@ -229,7 +229,7 @@ void Plansza:: generuj_Plansza()
                     if(this->tpiksele[x+1][y].free_status==true)
                     {
 
- this->tpiksele[x][y].Pwall=true;//stare pole
+                        this->tpiksele[x][y].Pwall=true;//stare pole
 
 
                         x++;
@@ -237,7 +237,7 @@ void Plansza:: generuj_Plansza()
                         this->tpiksele[x][y].set_xback(x-1);
                         this->tpiksele[x][y].set_yback(y);
 
-                       this->tpiksele[x][y].Lwall=true;
+                        this->tpiksele[x][y].Lwall=true;
 
 
 
@@ -256,13 +256,13 @@ void Plansza:: generuj_Plansza()
                     if (this->tpiksele[x][y+1].free_status==true)
                     {
 
-                       this->tpiksele[x][y].Dwall=true;
+                        this->tpiksele[x][y].Dwall=true;
 
                         y++;
 
                         this->tpiksele[x][y].set_xback(x);
                         this->tpiksele[x][y].set_yback(y-1);
-                 this->tpiksele[x][y].Gwall=true;
+                        this->tpiksele[x][y].Gwall=true;
 
 
 
@@ -278,7 +278,7 @@ void Plansza:: generuj_Plansza()
                 {
                     if(this->tpiksele[x-1][y].free_status==true)
                     {
-                    this->tpiksele[x][y].Lwall=true;
+                        this->tpiksele[x][y].Lwall=true;
 
 
 
@@ -288,7 +288,7 @@ void Plansza:: generuj_Plansza()
 
                         this->tpiksele[x][y].set_xback(x+1);
                         this->tpiksele[x][y].set_yback(y);
-                    this->tpiksele[x][y].Pwall=true;
+                        this->tpiksele[x][y].Pwall=true;
 
 
                     }
@@ -302,14 +302,14 @@ void Plansza:: generuj_Plansza()
                 {
                     if( this->tpiksele[x][y-1].free_status==true)
                     {
-                       this->tpiksele[x][y].Gwall=true;
+                        this->tpiksele[x][y].Gwall=true;
 
 
                         y--;
 
                         this->tpiksele[x][y].set_xback(x);
                         this->tpiksele[x][y].set_yback(y+1);
-                       this->tpiksele[x][y].Dwall=true;
+                        this->tpiksele[x][y].Dwall=true;
 
 
                     }
@@ -320,7 +320,7 @@ void Plansza:: generuj_Plansza()
             }
 
             counter++;
-             this->tpiksele[x][y].free_status=false;
+            this->tpiksele[x][y].free_status=false;
         }
         else
         {
@@ -352,25 +352,25 @@ void Plansza:: generuj_Plansza()
     {
         for(int j=1;j<39;j++)
         {
-          if(this->tpiksele[i][j].free_status==true)
-          {
-              x=i;
-              y=j;
-              this->tpiksele[x][j].free_status=false;
+            if(this->tpiksele[i][j].free_status==true)
+            {
+                x=i;
+                y=j;
+                this->tpiksele[x][j].free_status=false;
 
-              this->tpiksele[x][y].Gwall=true;
-              this->tpiksele[x][y-1].Dwall=true;
+                this->tpiksele[x][y].Gwall=true;
+                this->tpiksele[x][y-1].Dwall=true;
 
-              this->tpiksele[x][y].Pwall=true;
-              this->tpiksele[x+1][y].Lwall=true;
+                this->tpiksele[x][y].Pwall=true;
+                this->tpiksele[x+1][y].Lwall=true;
 
-              this->tpiksele[x][y].Dwall=true;
-              this->tpiksele[x][y+1].Gwall=true;
+                this->tpiksele[x][y].Dwall=true;
+                this->tpiksele[x][y+1].Gwall=true;
 
-              this->tpiksele[x][y].Lwall=true;
-              this->tpiksele[x-1][y].Pwall=true;
+                this->tpiksele[x][y].Lwall=true;
+                this->tpiksele[x-1][y].Pwall=true;
 
-          }
+            }
         }
     }
 
@@ -380,20 +380,20 @@ bool Plansza:: isgame(){return this->game_status;}
 
 void Plansza::tick()
 {
-if(!this->game_pause)
-{
-    this->czas++;
-if(this->czas>200)
-{
-    this->Heads.push_back(&this->tlawa[1][1]);
-    this->tlawa[1][1].free_status=false;
-    if(this->czas%12==0)
+    if(!this->game_pause)
     {
+        this->czas++;
+        if(this->czas>200)
+        {
+            this->Heads.push_back(&this->tlawa[1][1]);
+            this->tlawa[1][1].free_status=false;
+            if(this->czas%12==0)
+            {
 
                 add_Lawa(this->Heads.size());
+            }
+        }
     }
-}
-}
 }
 
 
@@ -438,7 +438,7 @@ void Plansza::reset_Plansza()
             this->tpiksele[i][j].xback=i;//do testow
             this->tpiksele[i][j].yback=j;//do testow
             this->tpiksele[i][j].error=false;
-             this->tpiksele[i][j].finish=false;
+            this->tpiksele[i][j].finish=false;
             this->tpiksele[i][j].colored=false;
             this->teleport_bar=0;
 
@@ -449,7 +449,7 @@ void Plansza::reset_Plansza()
 
 
         }
-     this->game_pause=false;
+    this->game_pause=false;
 }
 
 void Plansza:: reset_Lawa()
@@ -482,28 +482,28 @@ void Plansza:: add_Lawa( int dowykonania)//zalewanie
 {
 
     for(int i=0;i<dowykonania;i++)
+    {
+        if(this->tpiksele[this->Heads.at(i)->xplanszy+1][this->Heads.at(i)->yplanszy].Lwall && this->tlawa[this->Heads.at(i)->xplanszy+1][this->Heads.at(i)->yplanszy].free_status)
         {
-          if(this->tpiksele[this->Heads.at(i)->xplanszy+1][this->Heads.at(i)->yplanszy].Lwall && this->tlawa[this->Heads.at(i)->xplanszy+1][this->Heads.at(i)->yplanszy].free_status)
-          {
-              tlawa[this->Heads.at(i)->xplanszy+1][this->Heads.at(i)->yplanszy].free_status=0;
-              this->Heads.push_back(&this->tlawa[this->Heads.at(i)->xplanszy+1][this->Heads.at(i)->yplanszy]);
-          }
-          if(this->tpiksele[this->Heads.at(i)->xplanszy-1][this->Heads.at(i)->yplanszy].Pwall && this->tlawa[this->Heads.at(i)->xplanszy-1][this->Heads.at(i)->yplanszy].free_status)
-          {
-              tlawa[this->Heads.at(i)->xplanszy-1][this->Heads.at(i)->yplanszy].free_status=0;
-              this->Heads.push_back(&this->tlawa[this->Heads.at(i)->xplanszy-1][this->Heads.at(i)->yplanszy]);
-          }
-          if(this->tpiksele[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy+1].Gwall && this->tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy+1].free_status)
-          {
-              tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy+1].free_status=0;
-              this->Heads.push_back(&this->tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy+1]);
-          }
-          if(this->tpiksele[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy-1].Dwall && this->tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy-1].free_status)
-          {
-              tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy-1].free_status=0;
-              this->Heads.push_back(&this->tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy-1]);
-          }
+            tlawa[this->Heads.at(i)->xplanszy+1][this->Heads.at(i)->yplanszy].free_status=0;
+            this->Heads.push_back(&this->tlawa[this->Heads.at(i)->xplanszy+1][this->Heads.at(i)->yplanszy]);
         }
+        if(this->tpiksele[this->Heads.at(i)->xplanszy-1][this->Heads.at(i)->yplanszy].Pwall && this->tlawa[this->Heads.at(i)->xplanszy-1][this->Heads.at(i)->yplanszy].free_status)
+        {
+            tlawa[this->Heads.at(i)->xplanszy-1][this->Heads.at(i)->yplanszy].free_status=0;
+            this->Heads.push_back(&this->tlawa[this->Heads.at(i)->xplanszy-1][this->Heads.at(i)->yplanszy]);
+        }
+        if(this->tpiksele[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy+1].Gwall && this->tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy+1].free_status)
+        {
+            tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy+1].free_status=0;
+            this->Heads.push_back(&this->tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy+1]);
+        }
+        if(this->tpiksele[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy-1].Dwall && this->tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy-1].free_status)
+        {
+            tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy-1].free_status=0;
+            this->Heads.push_back(&this->tlawa[this->Heads.at(i)->xplanszy][this->Heads.at(i)->yplanszy-1]);
+        }
+    }
 
 
 
@@ -511,33 +511,33 @@ void Plansza:: add_Lawa( int dowykonania)//zalewanie
 
 void Plansza::doteleport()
 {
-  if(this->teleport_bar>=100)
-  {
-qsrand(QTime::currentTime().msec());
-int i,j;
-int iback,jback;
-    this->move_status=true;
-iback=this->g->xpos;
-jback=this->g->ypos;
+    if(this->teleport_bar>=100)
+    {
+        qsrand(QTime::currentTime().msec());
+        int i,j;
+        int iback,jback;
+        this->move_status=true;
+        iback=this->g->xpos;
+        jback=this->g->ypos;
 
 
-i=rand()%10-5;
-j=rand()%10-5;
+        i=rand()%10-5;
+        j=rand()%10-5;
 
- this->g->xpos+=i*10;
- this->g->ypos+=j*10;
-if(this->g->xpos<=15) this->g->xpos=15;
-if(this->g->ypos<=15) this->g->ypos=15;
-if(this->g->xpos>=485) this->g->xpos=485;
-if(this->g->ypos>=385) this->g->ypos=385;
+        this->g->xpos+=i*10;
+        this->g->ypos+=j*10;
+        if(this->g->xpos<=15) this->g->xpos=15;
+        if(this->g->ypos<=15) this->g->ypos=15;
+        if(this->g->xpos>=485) this->g->xpos=485;
+        if(this->g->ypos>=385) this->g->ypos=385;
 
-if(this->tlawa[(this->g->xpos-5)/10][(this->g->ypos-5)/10].colored)
-{
-this->g->xpos=iback;
-this->g->ypos=jback;
-   this->doteleport();
-}
-    this->teleport_bar=0;
-}
+        if(this->tlawa[(this->g->xpos-5)/10][(this->g->ypos-5)/10].colored)
+        {
+            this->g->xpos=iback;
+            this->g->ypos=jback;
+            this->doteleport();
+        }
+        this->teleport_bar=0;
+    }
 
 }
