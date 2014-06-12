@@ -214,8 +214,11 @@ void Plansza:: generuj_Plansza()
 
     int kierunek;
     int counter=0;
-    int x=20;
-    int y=20;
+    int x=rand()%48+1;
+    int y=rand()%38+1;
+
+
+
     this->tpiksele[x][y].free_status=false;
     while(counter<100000)
     {

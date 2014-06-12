@@ -32,7 +32,7 @@
    <widget class="QWidget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>30</x>
       <y>0</y>
       <width>191</width>
       <height>421</height>
