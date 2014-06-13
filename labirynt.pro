@@ -15,10 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     plansza.cpp \
-    pole.cpp
+    pole.cpp \
+    sciana.cpp \
+    lawa.cpp
 
 HEADERS  += mainwindow.h \
     plansza.h \
-    pole.h
+    pole.h \
+    sciana.h \
+    lawa.h
 
 FORMS    += mainwindow.ui

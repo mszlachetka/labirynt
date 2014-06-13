@@ -13,13 +13,7 @@ public:
     int ypos;
     int size;
     bool free_status;
-    bool Gwall;
-    bool Pwall;
-    bool Dwall;
-    bool Lwall;
-    bool error;
     bool finish;
-    bool colored;
     int xback;
     int  yback;
     int xplanszy;

@@ -20,17 +20,17 @@ Plansza::Plansza(QWidget *parent):QWidget(parent)
     this->setMaximumHeight(400);
     this->setMaximumWidth(500);
 
-    this->tpiksele=new Pole *[this->maximumWidth()/g->size/2];
+    this->tpiksele=new Sciana *[this->maximumWidth()/g->size/2];
     for(int i=0;i<this->maximumWidth()/g->size/2;i++)
     {
-        this->tpiksele[i]=new Pole[this->maximumHeight()/2/g->size];
+        this->tpiksele[i]=new Sciana [this->maximumHeight()/2/g->size];
 
     }
 
-    this->tlawa=new Pole *[this->maximumWidth()/g->size/2];
+    this->tlawa=new Lawa *[this->maximumWidth()/g->size/2];
     for(int i=0;i<this->maximumWidth()/g->size/2;i++)
     {
-        this->tlawa[i]=new Pole[this->maximumHeight()/2/g->size];
+        this->tlawa[i]=new Lawa[this->maximumHeight()/2/g->size];
 
 
     }
@@ -442,9 +442,9 @@ void Plansza::reset_Plansza()
             this->tpiksele[i][j].Pwall=false;
             this->tpiksele[i][j].xback=i;//do testow
             this->tpiksele[i][j].yback=j;//do testow
-            this->tpiksele[i][j].error=false;
+
             this->tpiksele[i][j].finish=false;
-            this->tpiksele[i][j].colored=false;
+
             this->teleport_bar=0;
 
             this->ruchy=0;

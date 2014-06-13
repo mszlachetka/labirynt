@@ -5,6 +5,8 @@
 #include <QKeyEvent>
 #include <QVector>
 #include "pole.h"
+#include "sciana.h"
+#include "lawa.h"
 
 
 
@@ -16,17 +18,12 @@ class Plansza : public QWidget
 public:
     explicit Plansza(QWidget *parent = 0);
     bool game_status;
-
     bool move_status;
     bool game_pause;
 
-
-
-
-
     Pole *g;
-    Pole **tpiksele;
-    Pole **tlawa;
+    Sciana **tpiksele;
+    Lawa **tlawa;
     QKeyEvent *w;
 
     double ruchy;
