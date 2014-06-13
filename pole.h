@@ -33,21 +33,6 @@ public:
 
 signals:
 public slots:
-    int get_xpos();
-    int get_ypos();
-    int get_size();
-    int  get_xback();
-    int  get_yback();
-
-
-
-    void set_xpos(int);
-    void set_ypos(int);
-    void set_size(int);
-    void  set_xback(int);
-    void  set_yback(int);
-
-
     bool is_free();
 };
 

@@ -16,7 +16,7 @@ class Plansza : public QWidget
 public:
     explicit Plansza(QWidget *parent = 0);
     bool game_status;
-    bool filled_status;
+
     bool move_status;
     bool game_pause;
 
@@ -32,7 +32,6 @@ public:
     double ruchy;
     int teleport_bar;
     int czas;
-    int iteracja;
     int wykonane;
     QVector <Pole *> Heads;
 private:

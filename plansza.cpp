@@ -10,28 +10,27 @@ Plansza::Plansza(QWidget *parent):QWidget(parent)
 
 
 
-
     g->size=5;
     g->xpos=15;
     g->ypos=15;
     game_status=false;
-    filled_status=false;
+
     move_status=false;
     game_pause=false;
     this->setMaximumHeight(400);
     this->setMaximumWidth(500);
 
-    this->tpiksele=new Pole *[this->maximumWidth()/g->get_size()/2];
-    for(int i=0;i<this->maximumWidth()/g->get_size()/2;i++)
+    this->tpiksele=new Pole *[this->maximumWidth()/g->size/2];
+    for(int i=0;i<this->maximumWidth()/g->size/2;i++)
     {
-        this->tpiksele[i]=new Pole[this->maximumHeight()/2/g->get_size()];
+        this->tpiksele[i]=new Pole[this->maximumHeight()/2/g->size];
 
     }
 
-    this->tlawa=new Pole *[this->maximumWidth()/g->get_size()/2];
-    for(int i=0;i<this->maximumWidth()/g->get_size()/2;i++)
+    this->tlawa=new Pole *[this->maximumWidth()/g->size/2];
+    for(int i=0;i<this->maximumWidth()/g->size/2;i++)
     {
-        this->tlawa[i]=new Pole[this->maximumHeight()/2/g->get_size()];
+        this->tlawa[i]=new Pole[this->maximumHeight()/2/g->size];
 
 
     }
@@ -83,7 +82,7 @@ void Plansza::rysuj_Frame(QPainter *d)
     d->setBrush(Qt::black);
     d->setPen(Qt::black);
 
-    for(int i=0;i<this->maximumWidth()/g->get_size()/2;i++)
+    for(int i=0;i<this->maximumWidth()/g->size/2;i++)
     {
         d->drawRect(0,0,this->maximumWidth(),2*this->tpiksele[i][0].size);
         d->drawRect(0,this->maximumHeight(),this->maximumWidth(),-2*this->tpiksele[i][0].size);
@@ -106,7 +105,7 @@ void Plansza::rysuj_Frame(QPainter *d)
 
 
     }
-    for(int i=0;i<this->maximumHeight()/g->get_size()/2;i++)
+    for(int i=0;i<this->maximumHeight()/g->size/2;i++)
     {
         d->drawRect(0,0,2*this->tpiksele[i][0].size,this->maximumHeight());
         d->drawRect(this->maximumWidth(),0,-2*this->tpiksele[i][0].size,this->maximumHeight());
@@ -142,12 +141,13 @@ void Plansza::rysuj_Gracz(QPainter *d, Pole *g)
 
 
 
-    d->drawRect(g->get_xpos()-g->get_size()+2,g->get_ypos()-g->get_size()+2,2*g->get_size()-4,2*g->get_size()-4);
+    d->drawRect(g->xpos-g->size+2,g->ypos-g->size+2,2*g->size-4,2*g->size-4);
 }
 void Plansza::rysuj_Plansza(QPainter *d)
 {
     d->setBrush(Qt::blue);
     d->setPen(Qt::blue);
+
 
 
 
@@ -162,7 +162,7 @@ void Plansza::rysuj_Plansza(QPainter *d)
             {
                 d->setBrush(Qt::darkRed);
                 d->setPen(Qt::red);
-                d->drawRect(this->tlawa[i][j].get_xpos()-g->get_size(),this->tlawa[i][j].get_ypos()-g->get_size(),2*g->get_size(),2*g->get_size());
+                d->drawRect(this->tlawa[i][j].xpos-g->size,this->tlawa[i][j].ypos-g->size,2*g->size,2*g->size);
                 this->tlawa[i][j].colored=true;
                 d->setPen(Qt::blue);
             }
@@ -184,7 +184,7 @@ void Plansza::rysuj_Plansza(QPainter *d)
             {
                 d->setPen(Qt::white);
 
-                d->drawText(242,389,200,200,0,"ZWYCIESTWO",0);
+                d->drawText(225,389,200,200,0,"ZWYCIESTWO",0);
                 this->game_pause=true;
                 this->move_status=false;
                 d->setPen(Qt::blue);
@@ -198,7 +198,8 @@ void Plansza::rysuj_Plansza(QPainter *d)
                 if(this->czas>100) this->move_status=false;
                 d->setPen(Qt::white);
 
-                d->drawText(242,389,200,200,0,"PORAZKA",0);
+                d->drawText(225,389,200,200,0,"PORAZKA",0);
+
                 this->teleport_bar=0;
 
                 d->setPen(Qt::blue);
@@ -220,7 +221,7 @@ void Plansza:: generuj_Plansza()
 
 
     this->tpiksele[x][y].free_status=false;
-    while(counter<100000)
+    while(counter!=100000) // taka ilosc w polaczeniu z pozniejszym czyszczeniem pozwala na uzyskanie paru drog prowadzacych do mety
     {
         kierunek=rand()%4+1;
         if((this->tpiksele[x+1][y].free_status==true || this->tpiksele[x][y+1].free_status==true || this->tpiksele[x-1][y].free_status==true || this->tpiksele[x][y-1].free_status==true)  )
@@ -237,8 +238,8 @@ void Plansza:: generuj_Plansza()
 
                         x++;
 
-                        this->tpiksele[x][y].set_xback(x-1);
-                        this->tpiksele[x][y].set_yback(y);
+                        this->tpiksele[x][y].xback=x-1;
+                        this->tpiksele[x][y].yback=y;
 
                         this->tpiksele[x][y].Lwall=true;
 
@@ -263,8 +264,8 @@ void Plansza:: generuj_Plansza()
 
                         y++;
 
-                        this->tpiksele[x][y].set_xback(x);
-                        this->tpiksele[x][y].set_yback(y-1);
+                        this->tpiksele[x][y].xback=x;
+                        this->tpiksele[x][y].yback=y-1;
                         this->tpiksele[x][y].Gwall=true;
 
 
@@ -289,8 +290,8 @@ void Plansza:: generuj_Plansza()
 
                         x--;
 
-                        this->tpiksele[x][y].set_xback(x+1);
-                        this->tpiksele[x][y].set_yback(y);
+                        this->tpiksele[x][y].xback=x+1;
+                        this->tpiksele[x][y].yback=y;
                         this->tpiksele[x][y].Pwall=true;
 
 
@@ -310,8 +311,8 @@ void Plansza:: generuj_Plansza()
 
                         y--;
 
-                        this->tpiksele[x][y].set_xback(x);
-                        this->tpiksele[x][y].set_yback(y+1);
+                        this->tpiksele[x][y].xback=x;
+                        this->tpiksele[x][y].yback=y+1;
                         this->tpiksele[x][y].Dwall=true;
 
 
@@ -411,7 +412,7 @@ void Plansza:: rysuj_Siatka(QPainter *d)
             if(this->tpiksele[i][j].free_status==true)
             {
                 d->setBrush(Qt::white);
-                d->drawEllipse(this->tpiksele[i][j].get_xpos(),this->tpiksele[i][j].get_ypos(),3,3);
+                d->drawEllipse(this->tpiksele[i][j].xpos,this->tpiksele[i][j].ypos,3,3);
 
 
 
@@ -426,13 +427,14 @@ void Plansza:: rysuj_Siatka(QPainter *d)
 
 void Plansza::reset_Plansza()
 {
-    this->filled_status=false;
-    for(int i=0;i<this->maximumWidth()/g->get_size()/2;i++)
-        for(int j=0 ; j<this->maximumHeight()/2/g->get_size();j++)
+
+
+    for(int i=0;i<this->maximumWidth()/g->size/2;i++)
+        for(int j=0 ; j<this->maximumHeight()/2/g->size;j++)
         {
-            this->tpiksele[i][j].xpos=g->get_size()+i*2*g->get_size();
-            this->tpiksele[i][j].ypos=g->get_size()+j*2*g->get_size();
-            this->tpiksele[i][j].size=g->get_size();
+            this->tpiksele[i][j].xpos=g->size+i*2*g->size;
+            this->tpiksele[i][j].ypos=g->size+j*2*g->size;
+            this->tpiksele[i][j].size=g->size;
             this->tpiksele[i][j].free_status=true;
             this->tpiksele[i][j].Gwall=false;
             this->tpiksele[i][j].Dwall=false;
@@ -448,7 +450,7 @@ void Plansza::reset_Plansza()
             this->ruchy=0;
 
 
-            if(i==this->maximumWidth()/g->get_size()/2-2 && j==this->maximumHeight()/2/g->get_size()-2 ) this->tpiksele[i][j].finish=true;
+            if(i==this->maximumWidth()/g->size/2-2 && j==this->maximumHeight()/2/g->size-2 ) this->tpiksele[i][j].finish=true;
 
 
         }
@@ -457,19 +459,19 @@ void Plansza::reset_Plansza()
 
 void Plansza:: reset_Lawa()
 {
-    for(int i=0;i<this->maximumWidth()/g->get_size()/2;i++)
-        for(int j=0 ; j<this->maximumHeight()/2/g->get_size();j++)
+    for(int i=0;i<this->maximumWidth()/g->size/2;i++)
+        for(int j=0 ; j<this->maximumHeight()/2/g->size;j++)
         {
-            this->tlawa[i][j].xpos=g->get_size()+i*2*g->get_size();
-            this->tlawa[i][j].ypos=g->get_size()+j*2*g->get_size();
-            this->tlawa[i][j].size=g->get_size();
+            this->tlawa[i][j].xpos=g->size+i*2*g->size;
+            this->tlawa[i][j].ypos=g->size+j*2*g->size;
+            this->tlawa[i][j].size=g->size;
             this->tlawa[i][j].free_status=true;
             this->tpiksele[i][j].xback=i;//do testow
             this->tpiksele[i][j].yback=j;//do testow
             this->tlawa[i][j].xplanszy=i;
             this->tlawa[i][j].yplanszy=j;
             this->wykonane=0;
-            this->iteracja=0;
+
             this->Heads.clear();
             this->tlawa[i][j].colored=false;
 
@@ -514,7 +516,7 @@ void Plansza:: add_Lawa( int dowykonania)//zalewanie
 
 void Plansza::doteleport()
 {
-    if(this->teleport_bar>=100)
+    if(this->teleport_bar>=100 && !this->game_pause)
     {
         qsrand(QTime::currentTime().msec());
         int i,j;

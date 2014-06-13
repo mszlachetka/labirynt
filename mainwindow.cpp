@@ -90,7 +90,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     case Qt::Key_W:
     {
 
-        if(this->p->tpiksele[this->p->g->xpos/this->p->g->get_size()/2][this->p->g->ypos/this->p->g->get_size()/2].Gwall && this->p->move_status)
+        if(this->p->tpiksele[this->p->g->xpos/this->p->g->size/2][this->p->g->ypos/this->p->g->size/2].Gwall && this->p->move_status)
         {
             p->g->ypos-=10;
             p->repaint();
@@ -105,7 +105,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
     case Qt::Key_S:
     {
-        if(this->p->tpiksele[this->p->g->xpos/this->p->g->get_size()/2][this->p->g->ypos/this->p->g->get_size()/2].Dwall && this->p->move_status)
+        if(this->p->tpiksele[this->p->g->xpos/this->p->g->size/2][this->p->g->ypos/this->p->g->size/2].Dwall && this->p->move_status)
         {
             p->g->ypos+=10;
             p->repaint();
@@ -121,7 +121,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     case Qt::Key_D:
     {
 
-        if(this->p->tpiksele[this->p->g->xpos/this->p->g->get_size()/2][this->p->g->ypos/this->p->g->get_size()/2].Pwall && this->p->move_status)
+        if(this->p->tpiksele[this->p->g->xpos/this->p->g->size/2][this->p->g->ypos/this->p->g->size/2].Pwall && this->p->move_status)
         {
             p->g->xpos+=10;
             p->repaint();
@@ -141,7 +141,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     case Qt::Key_A:
     {
 
-        if(this->p->tpiksele[this->p->g->xpos/this->p->g->get_size()/2][this->p->g->ypos/this->p->g->get_size()/2].Lwall && this->p->move_status)
+        if(this->p->tpiksele[this->p->g->xpos/this->p->g->size/2][this->p->g->ypos/this->p->g->size/2].Lwall && this->p->move_status)
         {
             p->g->xpos-=10;
             p->repaint();
