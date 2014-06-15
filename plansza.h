@@ -45,7 +45,7 @@ public slots:
     void rysuj_Plansza(QPainter *d);
     void reset_Plansza();
     void reset_Lawa();
-    void add_Lawa(int);
+    int add_Lawa(int, int);
     void paintEvent(QPaintEvent *);
 
     void rysuj_Siatka(QPainter *d);

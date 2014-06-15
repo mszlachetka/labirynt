@@ -9,34 +9,28 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     ui->progressBar->setValue(0);
-    p = new Plansza;
+    p = new Plansza;   
     ui->gridLayout_2->addWidget(p,0,0,0,0);
     setWindowTitle("LABIRYNT");
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-
 }
 
 
-void MainWindow::on_actionO_Qt_triggered()
+void MainWindow::on_actionO_Qt_triggered()//aboutQt
 {
     QApplication::aboutQt();
     p->game_pause=false;
     p->move_status=true;
-
 }
-
-void MainWindow::on_pushButton_3_pressed()
+void MainWindow::on_pushButton_3_pressed()//przycisk wyjscie
 {
     QApplication::exit();
 }
-
-
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pushButton_clicked()//przycisk start
 {
     p->g->xpos=15;
     p->g->ypos=15;
@@ -48,68 +42,48 @@ void MainWindow::on_pushButton_clicked()
 
     p->game_status=true;
     ui->lcdNumber->display(0);
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_pushButton_2_clicked()//pauza
 {
     p->game_pause=true;
     p->move_status=false;
 }
-
-
-void MainWindow::on_pushButton_8_clicked()
+void MainWindow::on_pushButton_8_clicked()//~pauza
 {
     p->game_pause=false;
     p->move_status=true;
 }
-
-void MainWindow::on_actionO_Qt_hovered()
+void MainWindow::on_actionO_Qt_hovered()//~aboutQt pauza
 {
     p->game_pause=true;
     p->move_status=false;
 }
-
-
-
-void MainWindow::keyPressEvent(QKeyEvent *event)
+void MainWindow::keyPressEvent(QKeyEvent *event)//sterowanie klawiatura
 {
     switch (event->key())
     {
     case Qt::Key_W:
     {
 
-        if(this->p->tpiksele[this->p->g->xpos/this->p->g->size/2][this->p->g->ypos/this->p->g->size/2].Gwall && this->p->move_status)
+        if(p->tpiksele[p->g->xpos/p->g->size/2][p->g->ypos/p->g->size/2].Gwall && p->move_status)
         {
             p->g->ypos-=10;
             p->repaint();
-            this->p->ruchy++;
+            p->ruchy++;
             p->teleport_bar+=1;
             ui->progressBar->setValue(p->teleport_bar);
-            ui->lcdNumber->display(this->p->ruchy);
-
+            ui->lcdNumber->display(p->ruchy);
         }
     }
         break;
 
     case Qt::Key_S:
     {
-        if(this->p->tpiksele[this->p->g->xpos/this->p->g->size/2][this->p->g->ypos/this->p->g->size/2].Dwall && this->p->move_status)
+        if(p->tpiksele[p->g->xpos/p->g->size/2][p->g->ypos/p->g->size/2].Dwall && p->move_status)
         {
             p->g->ypos+=10;
             p->repaint();
-            this->p->ruchy++;
+            p->ruchy++;
             p->teleport_bar+=1;
             ui->progressBar->setValue(p->teleport_bar);
             ui->lcdNumber->display(this->p->ruchy);
@@ -121,14 +95,14 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     case Qt::Key_D:
     {
 
-        if(this->p->tpiksele[this->p->g->xpos/this->p->g->size/2][this->p->g->ypos/this->p->g->size/2].Pwall && this->p->move_status)
+        if(p->tpiksele[p->g->xpos/p->g->size/2][p->g->ypos/p->g->size/2].Pwall && p->move_status)
         {
             p->g->xpos+=10;
             p->repaint();
-            this->p->ruchy++;
+            p->ruchy++;
             p->teleport_bar+=1;
             ui->progressBar->setValue(p->teleport_bar);
-            ui->lcdNumber->display(this->p->ruchy);
+            ui->lcdNumber->display(p->ruchy);
         }
     }
         break;
@@ -141,14 +115,14 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     case Qt::Key_A:
     {
 
-        if(this->p->tpiksele[this->p->g->xpos/this->p->g->size/2][this->p->g->ypos/this->p->g->size/2].Lwall && this->p->move_status)
+        if(p->tpiksele[p->g->xpos/p->g->size/2][p->g->ypos/p->g->size/2].Lwall && p->move_status)
         {
             p->g->xpos-=10;
             p->repaint();
-            this->p->ruchy++;
+            p->ruchy++;
             p->teleport_bar+=1;
             ui->progressBar->setValue(p->teleport_bar);
-            ui->lcdNumber->display(this->p->ruchy);
+            ui->lcdNumber->display(p->ruchy);
         }
     }
         break;
@@ -159,4 +133,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         QWidget::keyPressEvent(event);
     }
 }
+
+
 

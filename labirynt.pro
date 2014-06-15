@@ -26,3 +26,4 @@ HEADERS  += mainwindow.h \
     lawa.h
 
 FORMS    += mainwindow.ui
+

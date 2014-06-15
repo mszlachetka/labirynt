@@ -22,21 +22,9 @@ private slots:
     void on_pushButton_3_pressed();
     void on_pushButton_clicked();
     void keyPressEvent(QKeyEvent *event);
-
-
-
-
-
-
-
     void on_pushButton_2_clicked();
-
-
-
     void on_pushButton_8_clicked();
-
     void on_actionO_Qt_hovered();
-
 
 
 

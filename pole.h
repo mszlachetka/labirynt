@@ -19,10 +19,6 @@ public:
     int xplanszy;
     int yplanszy;
 
-
-
-
-public:
     explicit Pole(QWidget *parent=0);
 
 signals:
